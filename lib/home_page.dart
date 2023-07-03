@@ -11,6 +11,7 @@ import 'package:testflutter/detail_product/buy_product_page.dart';
 import 'package:testflutter/helper/global_function.dart';
 import 'package:testflutter/model/response_get_data.dart';
 import 'package:testflutter/utils/text_helper.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -38,6 +39,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    timeago.setLocaleMessages('id', MyCustomMessages());
+
     return Scaffold(
       body: SafeArea(
         child: Container(
@@ -682,9 +685,11 @@ class _HomePageState extends State<HomePage> {
                                     const SizedBox(
                                       width: 8.0,
                                     ),
-                                    const Text(
-                                      '3 hari lalu',
-                                      style: TextStyle(
+                                    Text(
+                                      timeago.format(
+                                          items.data.itemReview[0].createdAt,
+                                          locale: 'id'),
+                                      style: const TextStyle(
                                         color: Color(0xFF626262),
                                         fontSize: 12,
                                         fontFamily: 'Avenir',
@@ -825,10 +830,13 @@ class _HomePageState extends State<HomePage> {
                                             ),
                                           ],
                                         ),
-                                        const Text(
-                                          '1 hari lalu',
+                                        Text(
+                                          timeago.format(
+                                              items
+                                                  .data.discussion[0].createdAt,
+                                              locale: 'id'),
                                           textAlign: TextAlign.right,
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             color: Color(0xFF626262),
                                             fontSize: 14,
                                             fontFamily: 'Avenir',
@@ -1070,4 +1078,40 @@ class _HomePageState extends State<HomePage> {
           ),
     );
   }
+}
+
+// my_custom_messages.dart
+class MyCustomMessages implements timeago.LookupMessages {
+  @override
+  String prefixAgo() => '';
+  @override
+  String prefixFromNow() => '';
+  @override
+  String suffixAgo() => '';
+  @override
+  String suffixFromNow() => '';
+  @override
+  String lessThanOneMinute(int seconds) => 'now';
+  @override
+  String aboutAMinute(int minutes) => 'semenit yang lalu';
+  @override
+  String minutes(int minutes) => '$minutes menit yang lalu';
+  @override
+  String aboutAnHour(int minutes) => 'sejam yang lalu';
+  @override
+  String hours(int hours) => '$hours jam yang lalu';
+  @override
+  String aDay(int hours) => 'sehari yang lalu';
+  @override
+  String days(int days) => '$days hari yang lalu';
+  @override
+  String aboutAMonth(int days) => 'sebulan yang lalu';
+  @override
+  String months(int months) => '$months bulan yang lalu';
+  @override
+  String aboutAYear(int year) => 'setahun yang lalu';
+  @override
+  String years(int years) => '$years yang lalu';
+  @override
+  String wordSeparator() => ' ';
 }
