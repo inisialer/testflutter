@@ -153,7 +153,10 @@ class _HomePageState extends State<HomePage> {
                                   Row(
                                     children: [
                                       _cardDetail(
-                                          rating: items.data.itemMeta.rating),
+                                          rating: (int.parse(items
+                                                      .data.itemMeta.rating) /
+                                                  10)
+                                              .toString()),
                                       const SizedBox(
                                         width: 16.0,
                                       ),
@@ -514,9 +517,10 @@ class _HomePageState extends State<HomePage> {
                                 Text.rich(
                                   TextSpan(
                                     children: [
-                                      const TextSpan(
-                                        text: '4.9/5.0',
-                                        style: TextStyle(
+                                      TextSpan(
+                                        text:
+                                            '${(int.parse(items.data.itemMeta.rating) / 10).toString()} /5.0',
+                                        style: const TextStyle(
                                           color: Color(0xFF313131),
                                           fontSize: 16,
                                           fontFamily: 'Avenir',
